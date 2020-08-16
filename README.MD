@@ -303,9 +303,12 @@ cloud-config-client3355:
 ## Alibaba Nacos服务注册中心和配置中心
 #### 对应模块
 ```text
-cloud-provider-nacos-payment9001
-cloud-provider-nacos-payment9002
-cloud-consumer-nacos-order90
+服务注册中心：
+    cloud-provider-nacos-payment9001
+    cloud-provider-nacos-payment9002
+    cloud-consumer-nacos-order90
+服务配置中心：
+    cloud-config-nacos-client3377
 ```
 ## Alibaba Sentinel高可用流量管理框架
 #### 对应模块
