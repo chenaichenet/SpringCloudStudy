@@ -94,8 +94,8 @@ cloud-provider-payment8002：作为服务消费者
 ## Zookeeper服务注册与发现
 #### 对应模块
 ```text
-cloud-providerzk-payment8004
-cloud-consumerzk-order84
+cloud-provider-zookeeper-payment8004
+cloud-consumer-zookeeper-order84
 ```
 #### 笔记
 ```text
@@ -105,8 +105,8 @@ cloud-consumerzk-order84
 ## Consul服务注册与发现
 #### 对应模块
 ```text
-cloud-providerconsul-payment8006
-cloud-consumerconsul-order86
+cloud-provider-consul-payment8006
+cloud-consumer-consul-order86
 ```
 
 ## 三个注册中心的区别
@@ -142,7 +142,7 @@ ApplicationContextBean去掉@LoadBalanced
 #### 对应模块
 ```text
 cloud-provider-payment8001
-cloud-consumerfeign-order87
+cloud-consumer-feign-order87
 ```
 #### 笔记
 ```text
@@ -167,9 +167,9 @@ Feign提供了习惯的面向接口编程
 #### 对应模块
 ```text
 cloud-eureka-server7001：作为单机测试服务注册中心
-cloud-providerhystrix-payment8008
-cloud-consumerhystrix-order88
-cloud-consumerhystrix-dashboard9001：服务监控仪表盘
+cloud-provider-hystrix-payment8008
+cloud-consumer-hystrix-order88
+cloud-consumer-hystrix-dashboard9001：服务监控仪表盘
 ```
 #### 笔记
 ```text
@@ -213,6 +213,7 @@ cloud-consumerhystrix-dashboard9001：服务监控仪表盘
 ```text
 cloud-gateway-server9527：网关服务
 cloud-eureka-server7001
+cloud-eureka-server7002
 cloud-provider-payment8001
 ```
 #### 笔记
@@ -254,7 +255,7 @@ yml方式：
 自定义全局GlobalFilter：
     继承两个接口：GlobalFilter ,Ordered，实现其方法，一个定义拦截规则，一个定义过滤器加载顺序
 ```
-## SpringCloud config分布式配置中心
+## Config分布式配置中心
 #### 对应模块
 ```text
 cloud-config-center3344：服务端
@@ -283,4 +284,36 @@ cloud-config-client3355:
         application.yml 是用户级的资源配置项
         bootstrap.yml 是系统级的，优先级更高
     要将Client模块下的application.yml文件改为bootstrap.yml，这是很关键的
+```
+## Bus消息总线
+#### 对应模块
+```text
+
+```
+## Stream消息驱动
+#### 对应模块
+```text
+
+```
+## Sleuth分布式请求链路追踪
+#### 对应模块
+```text
+
+```
+## Alibaba Nacos服务注册中心和配置中心
+#### 对应模块
+```text
+cloud-provider-nacos-payment9001
+cloud-provider-nacos-payment9002
+cloud-consumer-nacos-order90
+```
+## Alibaba Sentinel高可用流量管理框架
+#### 对应模块
+```text
+
+```
+## Alibaba Seata分布式事务中间件
+#### 对应模块
+```text
+
 ```

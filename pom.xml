@@ -21,20 +21,20 @@
         <module>cloud-provider-payment8002</module>
 
         <!--Zookeeper服务注册与发现-->
-        <module>cloud-providerzk-payment8004</module>
-        <module>cloud-consumerzk-order84</module>
+        <module>cloud-provider-zookeeper-payment8004</module>
+        <module>cloud-consumer-zookeeper-order84</module>
 
         <!--Consul服务注册与发现-->
-        <module>cloud-providerconsul-payment8006</module>
-        <module>cloud-consumerconsul-order86</module>
+        <module>cloud-provider-consul-payment8006</module>
+        <module>cloud-consumer-consul-order86</module>
 
         <!--OpenFeign服务接口调用-->
-        <module>cloud-consumerfeign-order87</module>
+        <module>cloud-consumer-feign-order87</module>
 
         <!--Hystrix断路器-->
-        <module>cloud-providerhystrix-payment8008</module>
-        <module>cloud-consumerhystrix-order88</module>
-        <module>cloud-consumerhystrix-dashboard9001</module>
+        <module>cloud-provider-hystrix-payment8008</module>
+        <module>cloud-consumer-hystrix-order88</module>
+        <module>cloud-consumer-hystrix-dashboard9001</module>
 
         <!--GateWay网关-->
         <module>cloud-gateway-server9527</module>
@@ -42,6 +42,11 @@
         <!--Config配置中心-->
         <module>cloud-config-center3344</module>
         <module>cloud-config-client3355</module>
+
+        <!--Alibaba Nacos注册中心-->
+        <module>cloud-provider-nacos-payment9001</module>
+        <module>cloud-provider-nacos-payment9002</module>
+        <module>cloud-consumer-nacos-order90</module>
 
     </modules>
     <packaging>pom</packaging>
@@ -70,6 +75,7 @@
                 <type>pom</type>
                 <scope>import</scope>
             </dependency>
+
             <!--spring cloud Hoxton.SR1-->
             <dependency>
                 <groupId>org.springframework.cloud</groupId>
@@ -78,6 +84,7 @@
                 <type>pom</type>
                 <scope>import</scope>
             </dependency>
+
             <!--spring cloud alibaba 2.1.0.RELEASE-->
             <dependency>
                 <groupId>com.alibaba.cloud</groupId>
@@ -92,26 +99,31 @@
                 <artifactId>mysql-connector-java</artifactId>
                 <version>${mysql.version}</version>
             </dependency>
+
             <dependency>
                 <groupId>com.alibaba</groupId>
                 <artifactId>druid</artifactId>
                 <version>${druid.version}</version>
             </dependency>
+
             <dependency>
                 <groupId>org.mybatis.spring.boot</groupId>
                 <artifactId>mybatis-spring-boot-starter</artifactId>
                 <version>${mybatis.spring.boot.version}</version>
             </dependency>
+
             <dependency>
                 <groupId>junit</groupId>
                 <artifactId>junit</artifactId>
                 <version>${junit.version}</version>
             </dependency>
+
             <dependency>
                 <groupId>log4j</groupId>
                 <artifactId>log4j</artifactId>
                 <version>${log4j.version}</version>
             </dependency>
+
             <dependency>
                 <groupId>org.projectlombok</groupId>
                 <artifactId>lombok</artifactId>
@@ -119,10 +131,12 @@
                 <optional>true</optional>
                 <scope>provided</scope>
             </dependency>
+
         </dependencies>
     </dependencyManagement>
 
     <build>
+
         <plugins>
             <plugin>
                 <groupId>org.springframework.boot</groupId>
@@ -133,6 +147,7 @@
                 </configuration>
             </plugin>
         </plugins>
+
         <!-- 添加资源 -->
         <resources>
             <resource>
@@ -146,6 +161,7 @@
                 <filtering>false</filtering>
             </resource>
         </resources>
+
     </build>
 
 </project>
