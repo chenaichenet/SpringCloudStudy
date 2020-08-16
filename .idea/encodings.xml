@@ -7,6 +7,8 @@
     <file url="file://$PROJECT_DIR$/cloud-config-center3344/src/main/resources" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/cloud-config-client3355/src/main/java" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/cloud-config-client3355/src/main/resources" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/cloud-config-nacos-client3377/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/cloud-config-nacos-client3377/src/main/resources" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/cloud-consumer-consul-order86/src/main/java" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/cloud-consumer-consul-order86/src/main/resources" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/cloud-consumer-feign-order87/src/main/java" charset="UTF-8" />

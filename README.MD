@@ -19,21 +19,21 @@ cloud-consumer-order80：作为服务消费者
 ```text
 说说踩到的坑
 cloud-provider-payment8001：
-1、MySQL不同于之前的SQL server，它的连接参数有讲究，驱动有版本升级的区别，具体看yml文件。
-2、模块中使用了不同于之前学习的mapper文件放到dao包中，所有除了添加@Mapper注解外，在resource中定义的mapper文件，也要在配置文件中声明。具体看yml文件。
-3、Lombok使用1.16.18报错，修改程1.18.4版本完美解决。
-4、还有教学视频中在.idea中的通过修改idea的workpace.xml的方式来快速打开Run DashBoard窗口的添加代码的方法在IDEA2019中无效。
+    1、MySQL不同于之前的SQL server，它的连接参数有讲究，驱动有版本升级的区别，具体看yml文件。
+    2、模块中使用了不同于之前学习的mapper文件放到dao包中，所有除了添加@Mapper注解外，在resource中定义的mapper文件，也要在配置文件中声明。具体看yml文件。
+    3、Lombok使用1.16.18报错，修改程1.18.4版本完美解决。
+    4、还有教学视频中在.idea中的通过修改idea的workpace.xml的方式来快速打开Run DashBoard窗口的添加代码的方法在IDEA2019中无效。
     IDEA2019开启Run DashBoard参考这个笔记：https://blog.csdn.net/qq_38289863/article/details/101515838?utm_medium=distribute.pc_relevant.none-task-blog-BlogCommendFromMachineLearnPai2-1.channel_param&depth_1-utm_source=distribute.pc_relevant.none-task-blog-BlogCommendFromMachineLearnPai2-1.channel_param
 
-除此之外，还是一贯的domain——dao——service——controller结构。
+    除此之外，还是一贯的domain——dao——service——controller结构。
 
 cloud-consumer-order80：
-同样的模式，唯一不同的就是使用了RestTemplate把请求转发到另一个端口
+    同样的模式，唯一不同的就是使用了RestTemplate把请求转发到另一个端口。
 
-@GetMapping("/consumer/payment/get/{id}")
-    public CommonResult<Payment> getPayment(@PathVariable("id") Long id) {
-        return restTemplate.getForObject(PAYMENT_URL + "/payment/get/" + id, CommonResult.class);
-    }
+    @GetMapping("/consumer/payment/get/{id}")
+        public CommonResult<Payment> getPayment(@PathVariable("id") Long id) {
+            return restTemplate.getForObject(PAYMENT_URL + "/payment/get/" + id, CommonResult.class);
+        }
 ```
 
 ## Eureka服务注册与发现
@@ -46,15 +46,15 @@ cloud-consumer-order80：注册进eureka作为服务消费者
 ```
 #### 笔记
 ```text
-pom文件中添加依赖
+pom文件中添加依赖：
     <dependency>
         <groupId>org.springframework.cloud</groupId>
         <artifactId>spring-cloud-starter-netflix-eureka-client</artifactId>
     </dependency>
 
-yml中要将自己注册进Eureka
+yml中要将自己注册进Eureka。
 
-8001和80的主启动类都要添加注解@EnableEurekaClient，启用Eureka
+8001和80的主启动类都要添加注解@EnableEurekaClient，启用Eureka。
 ```
 ### 集群Eureka构建
 #### 对应模块
@@ -65,11 +65,11 @@ cloud-provider-payment8002：作为服务消费者
 ```
 #### 笔记
 ```text
-需要修改host文件，添加
+修改host文件（下面的Config中也是修改host文件，但是同样可以不修改，不修改的话就直接使用端口访问），添加：
     127.0.0.1  eureka7001.com
     127.0.0.1  eureka7002.com
 
-集群Eureka需要互相注册，互相守望，即7001指向7002，7002指向7001，具体查看application.yml文件
+集群Eureka需要互相注册，互相守望，即7001指向7002，7002指向7001，具体查看application.yml文件。
 
 负载均衡：
     使用@LoadBalanced注解赋予RestTemplate负载均衡的能力（默认轮询）。
@@ -87,8 +87,8 @@ cloud-provider-payment8002：作为服务消费者
     主启动类使用@EnableDiscoveryClient注解，通过List<String> services=discoveryClient.getServices();得到微服务的所有具体实例。
 
 自我保护：
-    7001端使用eureka.server.enable-self-preservation = false可以禁用自我保护模式
-    8001端使用eureka.instance.lease-renewal-interval-in-seconds，eureka.instance.lease-expiration-duration-in-seconds定义发送心跳时间间隔和等待时间上限
+    7001端使用eureka.server.enable-self-preservation = false可以禁用自我保护模式。
+    8001端使用eureka.instance.lease-renewal-interval-in-seconds，eureka.instance.lease-expiration-duration-in-seconds定义发送心跳时间间隔和等待时间上限。
 ```
 
 ## Zookeeper服务注册与发现
@@ -129,14 +129,14 @@ cloud-consumer-order80
 ```
 #### 笔记
 ```text
-ApplicationContextBean去掉@LoadBalanced
+ApplicationContextBean去掉@LoadBalanced。
 
 定义接口：
     public interface LoadBalancer {
         //收集服务器总共有多少台能够提供服务的机器，并放到list里面
         ServiceInstance instances(List<ServiceInstance> serviceInstances);
     }
-通过继承该接口，实现自定义的本地负载均衡
+通过继承该接口，实现自定义的本地负载均衡。
 ```
 ## OpenFeign服务接口调用
 #### 对应模块
@@ -157,10 +157,10 @@ cloud-consumer-feign-order87
         public CommonResult getPaymentById(@PathVariable("id") Long id);
     }
 
-Feign提供了习惯的面向接口编程
+Feign提供了习惯的面向接口编程。
 
 超时控制：
-    OpenFeign默认等待一秒钟，超过后报错，OpenFeign默认支持Ribbon
+    OpenFeign默认等待一秒钟，超过后报错，OpenFeign默认支持Ribbon。
 ```
 
 ## Hystrix断路器
@@ -185,11 +185,11 @@ cloud-consumer-hystrix-dashboard9001：服务监控仪表盘
             return "我是消费者80，对付支付系统繁忙请10秒钟后再试或者自己运行出错请检查自己,(┬＿┬)";
         }
     8008主启动类：
-        添加新注解@EnableCircuitBreaker，启用熔断器
+        添加新注解@EnableCircuitBreaker，启用熔断器。
     88业务类：
         同上
     88主启动类：
-        添加注解@EnableHystrix，启用Hystrix
+        添加注解@EnableHystrix，启用Hystrix。
 
 服务熔断：
     8008业务类：
@@ -204,8 +204,8 @@ cloud-consumer-hystrix-dashboard9001：服务监控仪表盘
         public String paymentCircuitBreaker_fallback(@PathVariable("id") Integer id){}
 
 服务监控：
-    主启动中需要配置Bean，让后访问http://localhost:9001/hystrix
-    服务监控只能监控熔断，不能监控降级
+    主启动中需要配置Bean，让后访问http://localhost:9001/hystrix。
+    服务监控只能监控熔断，不能监控降级。
 ```
 
 ## GateWay网关
@@ -218,7 +218,7 @@ cloud-provider-payment8001
 ```
 #### 笔记
 ```text
-配置路由有两种方式，一种是通过yml配置文件，一种是通过代码中注入RouteLocator的Bean
+配置路由有两种方式，一种是通过yml配置文件，一种是通过代码中注入RouteLocator的Bean。
 
 yml方式：
     cloud:
@@ -253,7 +253,7 @@ yml方式：
     - Query=username, \d+   #要有参数名称并且是正整数才能路由
 
 自定义全局GlobalFilter：
-    继承两个接口：GlobalFilter ,Ordered，实现其方法，一个定义拦截规则，一个定义过滤器加载顺序
+    继承两个接口：GlobalFilter ,Ordered，实现其方法，一个定义拦截规则，一个定义过滤器加载顺序。
 ```
 ## Config分布式配置中心
 #### 对应模块
@@ -267,9 +267,9 @@ cloud-eureka-server7002
 ```text
 cloud-center3344:
     yml中定义文件路径，详细见yml文件
-    这里有一个坑，不知原因，IDEA中使用SSH的话会拉取不到文件，但是使用HTTP的话就可以
+    这里有一个坑，不知原因，IDEA中使用SSH的话会拉取不到文件，但是使用HTTP的话就可以。
 
-    主启动类使用注解：@EnableConfigServer
+    主启动类使用注解：@EnableConfigServer。
 
     读取配置规则：
         1、/{label}/{application}-{profile}.yml（推荐使用这种方式）：
@@ -281,9 +281,9 @@ cloud-center3344:
 
 cloud-config-client3355:
     新增了一个bootstap.yml文件：
-        application.yml 是用户级的资源配置项
-        bootstrap.yml 是系统级的，优先级更高
-    要将Client模块下的application.yml文件改为bootstrap.yml，这是很关键的
+        application.yml 是用户级的资源配置项。
+        bootstrap.yml 是系统级的，优先级更高。
+    要将Client模块下的application.yml文件改为bootstrap.yml，这是很关键的。
 ```
 ## Bus消息总线
 #### 对应模块
@@ -309,6 +309,44 @@ cloud-config-client3355:
     cloud-consumer-nacos-order90
 服务配置中心：
     cloud-config-nacos-client3377
+```
+#### 笔记
+```text
+访问：http://localhost:8848/nacos或者http://localhost:8848/nacos/#/login
+服务注册中心：
+    四个注册中心对比
+        AP：Eureka，Nacos
+        CP：Zookeeper，Consul
+    
+    Nacos支持AP和CP模式切换，使用命令curl -X PUT '$NACOS_SERVER:8848/nacos/v1/ns/operator/switches?entry=serverMode&value=CP'
+    
+    何时选择何种模式？
+    一般来说，
+    如果不需要存储服务级别的信息，且服务实例是通过nacos-client注册，并且能保持心跳上报，那么就选择AP模式。
+    当前主流的服务如Spring Cloud和Dubbo服务，都适合AP模式，AP模式为了服务的可能性而减弱了一致性，因此AP模式下只支持注册临时实例。
+     
+    如果需要在服务级别编辑或存储配置信息，那么CP是必须，K8S服务和DNS服务则适合CP模式。
+    CP模式下则支持注册持久化实例，此时则是以Raft协议为集群运行模式，该模式下注册实例之前必须先注册服务，如果服务不存在，则会返回错误。
+
+服务配置中心：
+
+    主启动类中，通过SpringCloud原生注解@RefreshScope实现配置自动更新
+
+    Nacos中的匹配规则：
+        ${prefix}-${spring.profiles.active}.${spring.cloud.nacos.config.file-extension}
+        prefix  默认为 spring.application.name 的值，也可以通过配置项 spring.cloud.nacos.config.prefix来配置。
+        spring.profiles.active 即为当前环境对应的 profile，详情可以参考 Spring Boot文档。 注意：当 spring.profiles.active 为空时，对应的连接符 - 也将不存在，dataId 的拼接格式变成 ${prefix}.${file-extension}。
+        file-exetension 为配置内容的数据格式，可以通过配置项 spring.cloud.nacos.config.file-extension 来配置。目前只支持 properties 和 yaml 类型。
+    示例：
+        Nacos控制台中添加配置列表，此时的Data ID：cloud-config-nacos-client-dev.yaml，配置格式yaml，信息如下：
+            config:
+                info: "config info for dev,from nacos config center,version = 1.0"
+        访问：http://localhost:3377/nacos/config/info得到信息。
+
+    Nacos还可以进行分类配置，有三种方案，DataID、Group、Namespace
+        DataID：默认的方案，在application中配置 spring.profiles.active=dev来对应Nacos中的DataID。
+        Group：使用分组，在Nacos控制台中可以定义分组，在bootstrap中配置   spring.cloud.nacos.config.group=DEFAULT_GROUP 来对应分组。
+        Namespace：使用命名空间，在Nacos控制台中定义命名空间，在bootstrap中配置 spring.cloud.nacos.config.namespace=3711bcd7-0c56-445b-91e6-c6e4871561b0 来匹配命名空间。
 ```
 ## Alibaba Sentinel高可用流量管理框架
 #### 对应模块
