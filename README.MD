@@ -1,4 +1,12 @@
-# Spring Cloud学习demo
+# Spring Cloud学习笔记
+#### README说明
+````text
+对应模块：该章学习中需要新建的模块，以及测试需要用到的模块。
+笔记：着重一些脑图中没有提到的，或者修正的，以及一些重要的知识点。
+````
+#### 学习视频中的源码及脑图文件
+https://github.com/chenaichenet/AtguiguSpringCloud      
+
 
 ## 微服务框架编码构建
 #### 对应模块
@@ -10,8 +18,7 @@ cloud-consumer-order80：作为服务消费者
 #### 笔记
 ```text
 说说踩到的坑
-cloud-provider-payment8001
-
+cloud-provider-payment8001：
 1、MySQL不同于之前的SQL server，它的连接参数有讲究，驱动有版本升级的区别，具体看yml文件。
 2、模块中使用了不同于之前学习的mapper文件放到dao包中，所有除了添加@Mapper注解外，在resource中定义的mapper文件，也要在配置文件中声明。具体看yml文件。
 3、Lombok使用1.16.18报错，修改程1.18.4版本完美解决。
@@ -19,10 +26,8 @@ cloud-provider-payment8001
     IDEA2019开启Run DashBoard参考这个笔记：https://blog.csdn.net/qq_38289863/article/details/101515838?utm_medium=distribute.pc_relevant.none-task-blog-BlogCommendFromMachineLearnPai2-1.channel_param&depth_1-utm_source=distribute.pc_relevant.none-task-blog-BlogCommendFromMachineLearnPai2-1.channel_param
 
 除此之外，还是一贯的domain——dao——service——controller结构。
-```
-```text
-cloud-consumer-order80
 
+cloud-consumer-order80：
 同样的模式，唯一不同的就是使用了RestTemplate把请求转发到另一个端口
 
 @GetMapping("/consumer/payment/get/{id}")
@@ -82,7 +87,8 @@ cloud-provider-payment8002：作为服务消费者
     主启动类使用@EnableDiscoveryClient注解，通过List<String> services=discoveryClient.getServices();得到微服务的所有具体实例。
 
 自我保护：
-    使用eureka.server.enable-self-preservation = false可以禁用自我保护模式
+    7001端使用eureka.server.enable-self-preservation = false可以禁用自我保护模式
+    8001端使用eureka.instance.lease-renewal-interval-in-seconds，eureka.instance.lease-expiration-duration-in-seconds定义发送心跳时间间隔和等待时间上限
 ```
 
 ## Zookeeper服务注册与发现
@@ -102,6 +108,7 @@ cloud-consumerzk-order84
 cloud-providerconsul-payment8006
 cloud-consumerconsul-order86
 ```
+
 ## 三个注册中心的区别
 ```text
 CAP
@@ -204,7 +211,9 @@ cloud-consumerhystrix-dashboard9001：服务监控仪表盘
 ## GateWay网关
 #### 对应模块
 ```text
-cloud-gateway-server9527
+cloud-gateway-server9527：网关服务
+cloud-eureka-server7001
+cloud-provider-payment8001
 ```
 #### 笔记
 ```text
@@ -244,5 +253,34 @@ yml方式：
 
 自定义全局GlobalFilter：
     继承两个接口：GlobalFilter ,Ordered，实现其方法，一个定义拦截规则，一个定义过滤器加载顺序
+```
+## SpringCloud config分布式配置中心
+#### 对应模块
+```text
+cloud-config-center3344：服务端
+cloud-config-client3355：客户端
+cloud-eureka-server7001：3344，3355注册进了eureka，而eureka中定义的是集群模式（可以改为单机）
+cloud-eureka-server7002
+```
+#### 笔记
+```text
+cloud-center3344:
+    yml中定义文件路径，详细见yml文件
+    这里有一个坑，不知原因，IDEA中使用SSH的话会拉取不到文件，但是使用HTTP的话就可以
 
+    主启动类使用注解：@EnableConfigServer
+
+    读取配置规则：
+        1、/{label}/{application}-{profile}.yml（推荐使用这种方式）：
+            http://localhost:3344/master/config-dev.yml
+        2、/{application}-{profile}.yml：
+            http://localhost:3344/config-dev.yml
+        3、/{application}-{profile}[/{label}]：
+            http://localhost:3344/config/dev/master
+
+cloud-config-client3355:
+    新增了一个bootstap.yml文件：
+        application.yml 是用户级的资源配置项
+        bootstrap.yml 是系统级的，优先级更高
+    要将Client模块下的application.yml文件改为bootstrap.yml，这是很关键的
 ```

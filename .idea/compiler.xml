@@ -21,7 +21,9 @@
         <module name="cloud-providerzk-payment8004" />
         <module name="cloud-providerconsul-payment8006" />
         <module name="cloud-consumerhystrix-dashboard9001" />
+        <module name="cloud-config-center3344" />
         <module name="cloud-consumerconsul-order86" />
+        <module name="cloud-config-client3355" />
       </profile>
     </annotationProcessing>
   </component>
