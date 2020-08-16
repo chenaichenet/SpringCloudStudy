@@ -23,7 +23,7 @@ public class GateWayConfig {
     @Bean
     public RouteLocator customRouteLocator(RouteLocatorBuilder routeLocatorBuilder) {
         RouteLocatorBuilder.Builder routes = routeLocatorBuilder.routes();  //对应yml中的routes
-        routes.route("test_route", r -> r.path("/guonei").uri("http://news.baidu.com/guonei")).build();
+        routes.route("test_route", r -> r.path("/baidu").uri("https://www.baidu.com/")).build();
         return routes.build();
     }
 }
