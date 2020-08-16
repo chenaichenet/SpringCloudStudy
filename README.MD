@@ -230,4 +230,19 @@ yml方式：
             routes.route("test_route", r -> r.path("/guonei").uri("http://news.baidu.com/guonei")).build();
             return routes.build();
         }
+
+常用的Route Predicate：
+    - Path=/payment/lb/**   #断言,路径相匹配的进行路由
+    - After=2020-08-16T08:41:27.049083200+08:00[Asia/Shanghai]  #表示在这个时间以后，请求访问才有效果
+    - Before=2020-08-17T08:41:27.049083200+08:00[Asia/Shanghai] #表示在这个时间之前，请求访问才有效果
+    - Between=2020-08-16T08:41:27.049083200+08:00[Asia/Shanghai],2020-08-17T08:41:27.049083200+08:00[Asia/Shanghai] #在特定时间内
+    - Cookie=username,test #cookie名为username，值为test（可以设置正则表达式）
+    - Hander=X-Request-Id, \d+  #请求头要有 X-Request-Id 属性并且值为整数的正则表达式
+    - Host=**.springcloud.com   #主机地址
+    - Method=GET  #请求类型
+    - Query=username, \d+   #要有参数名称并且是正整数才能路由
+
+自定义全局GlobalFilter：
+    继承两个接口：GlobalFilter ,Ordered，实现其方法，一个定义拦截规则，一个定义过滤器加载顺序
+
 ```
