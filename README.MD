@@ -332,6 +332,11 @@ cloud-provider-stream-payment8801：
         此外，端口port: 5672，是正确的，不是15672。
 cloud-consumer-stream-order8802/8803：
     配置一个监听类ReceiveMessageListenerController，使用注解@EnableBinding(Sink.class)和@StreamListener(Sink.INPUT)监听消息通道的消息。
+
+此时启动8802，8803会出现一个问题：消息的重复消费以及消息持久化的问题。
+    使用group: A，添加分组。
+    不同组之间，可以重复消费。而在同一组中属于竞争关系，每次只有一个能消费。
+    使用分组后，可以自动持久化。
 ```
 
 ## Sleuth分布式请求链路追踪
