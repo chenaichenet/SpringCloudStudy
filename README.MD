@@ -288,13 +288,52 @@ cloud-config-client3355:
 ## Bus消息总线
 #### 对应模块
 ```text
-
+cloud-config-center3344
+cloud-config-client3355
+cloud-config-client3366
 ```
+#### 笔记
+```text
+3344配置中心端添加消息总线支持，在pom和bootstrap中添加对应配置。
+3355、3366同样添加对应的消息总线支持。
+
+通过以上配置，可以实现config中提到的广播通知，可以实现全局广播刷新。
+
+使用Bus还可以实现定点通知：
+    只通知3355：curl -X POST "http://localhost:3344/actuator/bus-refresh/config-client:3355"
+    对比全局通知：对比全局通知：curl -X POST "http://localhost:3344/actuator/bus-refresh"
+```
+
 ## Stream消息驱动
 #### 对应模块
 ```text
-
+cloud-provider-stream-payment8801：作为生产者进行发消息模块
+cloud-consumer-stream-order8802：作为消息接受模块
+cloud-consumer-stream-order8803：作为消息接受模块
 ```
+#### 笔记
+```text
+cloud-provider-stream-payment8801：
+    在没有引入Stream消息驱动之前，标准的MQ：
+        生产者/消费者之间靠消息（Message）媒介传递信息内容。
+        消息必须走特定的通道（MessageChannel）。
+        消息通道里的消息由其子接口SubscribableChannel，由MessageHandler消息处理器订阅。
+    
+    使用消息驱动，可以解决不同的消息中间件通信的问题。CloudStream使用Binder作为中间层，实现应用程序与消息中间件细节之间的隔离。
+    
+    Stream中的消息通信方式遵循了发布-订阅模式，在RabbitMQ就是Exchange；在kafka中就是Topic。
+    标准执行流程：
+        Binder：连接中间件，屏蔽差异。
+        Channel：通道，是队列Queue的一种抽象，在消息通讯系统中就是实现存储和转发的媒介，通过对Channel对队列进行配置。
+        Source和Sink：简单的可理解为参照对象是Spring Cloud Stream自身，从Stream发布消息就是输出，接受消息就是输入。
+    
+    补充说明：
+        application中 binder: defaultRabbit 报错，但是没有错，是正确的。
+        此外，端口port: 5672，是正确的，不是15672。
+cloud-consumer-stream-order8802/8803：
+    配置一个监听类ReceiveMessageListenerController，使用注解@EnableBinding(Sink.class)和@StreamListener(Sink.INPUT)监听消息通道的消息。
+```
+
 ## Sleuth分布式请求链路追踪
 #### 对应模块
 ```text
@@ -347,6 +386,9 @@ cloud-config-client3355:
         DataID：默认的方案，在application中配置 spring.profiles.active=dev来对应Nacos中的DataID。
         Group：使用分组，在Nacos控制台中可以定义分组，在bootstrap中配置   spring.cloud.nacos.config.group=DEFAULT_GROUP 来对应分组。
         Namespace：使用命名空间，在Nacos控制台中定义命名空间，在bootstrap中配置 spring.cloud.nacos.config.namespace=3711bcd7-0c56-445b-91e6-c6e4871561b0 来匹配命名空间。
+
+Nacos集群和持久化配置
+    Nacos默认使用嵌入式数据库derby实现数据存储，通过执行nacos\conf下的nacos-mysql.sql脚本和application.properties配置文件，可以进行数据库的切换。
 ```
 ## Alibaba Sentinel高可用流量管理框架
 #### 对应模块

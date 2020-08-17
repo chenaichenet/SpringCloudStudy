@@ -43,6 +43,12 @@
         <module>cloud-config-center3344</module>
         <module>cloud-config-client3355</module>
 
+        <!--Bus消息总线-->
+        <module>cloud-config-client3366</module>
+
+        <!--Stream消息驱动-->
+        <module>cloud-provider-stream-payment8801</module>
+
         <!--Alibaba Nacos注册中心-->
         <module>cloud-provider-nacos-payment9001</module>
         <module>cloud-provider-nacos-payment9002</module>
@@ -50,6 +56,9 @@
 
         <!--Alibaba Nacos配置中心-->
         <module>cloud-config-nacos-client3377</module>
+        <module>cloud-consumer-stream-order8802</module>
+        <module>cloud-consumer-stream-order8803</module>
+
 
     </modules>
     <packaging>pom</packaging>
