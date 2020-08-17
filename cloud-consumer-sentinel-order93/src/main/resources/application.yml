@@ -1,0 +1,22 @@
+server:
+  port: 93
+
+spring:
+  application:
+    name: nacos-order-consumer
+  cloud:
+    nacos:
+      discovery:
+        server-addr: localhost:8848 #微服务注册进8848
+    sentinel:
+      transport:
+        dashboard: localhost:8080 #8080监控84
+        port: 8719
+
+service-url:
+  nacos-user-service: http://cloud-provider-sentinel-service
+
+#对Feign的支持
+feign:
+  sentinel:
+    enabled: true
