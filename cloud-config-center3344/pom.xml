@@ -18,6 +18,12 @@
             <artifactId>spring-cloud-config-server</artifactId>
         </dependency>
 
+        <!--消息总线支持-->
+        <dependency>
+            <groupId>org.springframework.cloud</groupId>
+            <artifactId>spring-cloud-starter-bus-amqp</artifactId>
+        </dependency>
+
         <!--eureka-->
         <dependency>
             <groupId>org.springframework.cloud</groupId>
