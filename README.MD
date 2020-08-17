@@ -342,8 +342,20 @@ cloud-consumer-stream-order8802/8803：
 ## Sleuth分布式请求链路追踪
 #### 对应模块
 ```text
-
+cloud-provider-payment8001
+cloud-consumer-order80
 ```
+#### 笔记
+```text
+cloud-provider-payment8001：
+    pom中添加zipkin依赖，application中配置spring.zipkin和spring.sleuth。
+    controller中配置方法输出。
+
+cloud-consumer-order80：
+    pom中同样添加zipkin依赖，application中配置spring.zipkin和spring.sleuth。
+    controller中配置方法指向8001。
+```
+
 ## Alibaba Nacos服务注册中心和配置中心
 #### 对应模块
 ```text
