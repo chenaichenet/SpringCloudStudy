@@ -34,7 +34,7 @@
         <!--Hystrix断路器-->
         <module>cloud-provider-hystrix-payment8008</module>
         <module>cloud-consumer-hystrix-order88</module>
-        <module>cloud-consumer-hystrix-dashboard9001</module>
+        <module>cloud-consumer-hystrix-dashboard8888</module>
 
         <!--GateWay网关-->
         <module>cloud-gateway-server9527</module>
@@ -60,7 +60,12 @@
         <module>cloud-consumer-stream-order8803</module>
 
         <!--Alibaba Sentinel-->
+        <!--服务限流、降级-->
         <module>cloud-provider-sentinel-payment9004</module>
+        <!--服务熔断-->
+        <module>cloud-provider-sentinel-payment9005</module>
+        <module>cloud-provider-sentinel-payment9006</module>
+        <module>cloud-consumer-sentinel-order93</module>
 
 
     </modules>

@@ -410,7 +410,10 @@ Nacos集群和持久化配置
 ## Alibaba Sentinel高可用流量管理框架
 #### 对应模块
 ```text
-cloud-provider-sentinel-payment9004
+cloud-provider-sentinel-payment9004：服务降级、限流
+cloud-provider-sentinel-payment9005：服务熔断提供者
+cloud-provider-sentinel-payment9006：服务熔断提供者
+cloud-consumer-sentinel-order93：服务熔断消费者
 ```
 #### 笔记
 ```text
@@ -431,6 +434,29 @@ Sentinel采用的是懒加载，即执行一次访问后，才会加载。
         快速失败：直接失败，抛异常。
         Warm Up：根据codeFactor（冷加载因子，默认3）的值，从阈值/codeFactor，经过预热时长，才达到设置的QPS阈值。
         排队等待：匀速排队，让请求以匀速通过，阈值类型必须设置为QPS，否则无效。
+
+Sentinel的断路器是没有半开状态的，不同于Hystrix。
+
+降级规则：
+    RT：平均响应时间。Sentinel默认是4900ms，超出阈值都会算作4900ms。处理请求的时间超过定义的时间，服务降级。
+    异常比例：QPS达到要求，且异常比例（秒级统计）超过阈值，服务降级。
+    异常数：异常数是分钟统计的，窗口时间一定要大于60。当一分钟内的异常数超过阈值，服务降级。
+
+热点限流：
+    限流模式仅支持QPS模式。
+    使用@SentinelResource(value = "testHotKey",blockHandler = "deal_testHotKey") 定义热点规则资源名和兜底方法。
+    此外，还可以定义参数例外项，当参数未某个值的时候，提供不同的阈值。
+
+    限流规则：
+        按资源名称限流：流控规则中添加资源名称为：byResource，使用@SentinelResource(value = "byResource",blockHandler = "handleException")对应资源名和兜底方法。
+        按照Url地址限流：流控规则中添加资源名称为：/rateLimit/byUrl，使用@GetMapping("/rateLimit/byUrl") @SentinelResource(value = "byUrl")对应。
+    
+    还可以自定义限流处理类：
+        资源名为：customerBlockHandler，使用@SentinelResource(value = "customerBlockHandler",blockHandlerClass = CustomerBlockHandler.class,blockHandler = "handlerException2")对应即可。
+
+服务熔断：
+    使用@SentinelResource(value = "fallback",fallback = "handlerFallback",blockHandler = "blockHandler", exceptionsToIgnore = {IllegalArgumentException.class})
+    配置业务异常和控制台配置异常的兜底方法。流控资源名为：fallback。
 ```
 
 ## Alibaba Seata分布式事务中间件
