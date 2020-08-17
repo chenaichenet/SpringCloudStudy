@@ -59,6 +59,9 @@
         <module>cloud-consumer-stream-order8802</module>
         <module>cloud-consumer-stream-order8803</module>
 
+        <!--Alibaba Sentinel-->
+        <module>cloud-provider-sentinel-payment9004</module>
+
 
     </modules>
     <packaging>pom</packaging>

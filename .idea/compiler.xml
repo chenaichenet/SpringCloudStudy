@@ -24,6 +24,7 @@
         <module name="cloud-provider-stream-payment8801" />
         <module name="cloud-consumer-stream-order8803" />
         <module name="cloud-gateway-server9527" />
+        <module name="cloud-provider-sentinel-payment9004" />
         <module name="cloud-consumer-feign-order87" />
         <module name="cloud-consumer-consul-order86" />
         <module name="cloud-consumer-stream-order8802" />
