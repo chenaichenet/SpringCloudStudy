@@ -56,7 +56,7 @@ public class PaymentController
         }
     }
 
-
+    //服务发现
     @GetMapping(value = "/payment/discovery")
     public Object discovery(){
         List<String> services=discoveryClient.getServices();
@@ -78,6 +78,7 @@ public class PaymentController
         return serverPort;
     }
 
+
     //OpenFeign超时控制，手动超时
     @GetMapping(value = "/payment/feign/timeout")
     public String paymentFeignTimeout(){
@@ -87,6 +88,12 @@ public class PaymentController
             e.printStackTrace();
         }
         return serverPort;
+    }
+
+    //分布式链路追踪
+    @GetMapping("/payment/zipkin")
+    public String paymentZipkin() {
+        return "分布式服务追踪";
     }
 
 }
